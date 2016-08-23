@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.example.view.NoScrollViewPage
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/vp_fragment_content">
+
+    </com.example.view.NoScrollViewPage>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/bottom_tab_bg"
+        android:orientation="horizontal"
+        android:id="@+id/rg_fragmentcontent_group">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/content_bottom_home"
+            android:text="首页"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@drawable/content_text_color"
+            android:id="@+id/rb_fragmentcontent_home"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/content_bottom_news"
+            android:text="新闻中心"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@drawable/content_text_color"
+            android:id="@+id/rb_fragmentcontent_news"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/content_bottom_smart"
+            android:text="智慧服务"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@drawable/content_text_color"
+            android:id="@+id/rb_fragmentcontent_smart"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/content_bottom_gov"
+            android:text="政务"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@drawable/content_text_color"
+            android:id="@+id/rb_fragmentcontent_gov"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/content_bottom_setting"
+            android:text="设置"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="@drawable/content_text_color"
+            android:id="@+id/rb_fragmentcontent_setting"/>
+
+
+    </RadioGroup>
+
+</LinearLayout>
