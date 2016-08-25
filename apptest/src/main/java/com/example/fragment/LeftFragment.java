@@ -12,8 +12,10 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.apptest.HomeActivity;
 import com.example.apptest.R;
 import com.example.bean.Categories;
+import com.example.pages.PageNews;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,16 +43,30 @@ public class LeftFragment extends Fragment {
 
         View fragment_left = View.inflate(getActivity(), R.layout.fragment_left, null);
 
-        dataBeanList=new ArrayList<>();
+        final HomeActivity homeActivity = (HomeActivity) getActivity();
+
+        dataBeanList = new ArrayList<>();
 
         ButterKnife.bind(this, fragment_left);
 
         lv_leftfragment_items.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                currentPosition=position;
+                currentPosition = position;
                 //每点击一次就刷新一次页面，防止都变红
                 myLeftAdapter.notifyDataSetChanged();
+
+                //点击更换内容
+                ContentFragment contentFragment = homeActivity.getContentFragment();
+                PageNews pageNews = contentFragment.getPageNews();
+                Log.d("LeftFragment", "position:" + position);
+                if (pageNews!=null)
+                {
+                    pageNews.changeMenuPage(position);
+                }
+
+                //更改完之后让侧栏自动收回
+                homeActivity.toggle();
             }
         });
 
@@ -61,7 +77,8 @@ public class LeftFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return 4;
+            Log.d("LeftFragment", "categories.data.size():" + categories.data.size());
+            return  categories.data.size();
         }
 
         @Override
@@ -79,19 +96,14 @@ public class LeftFragment extends Fragment {
 
             Categories.DataBean dataBean = categories.data.get(position);
 
-//            dataBeanList.add(dataBean);
-//            Log.d("MyLeftAdapter", "dataBeanList.size():" + dataBeanList.size());
-
             View item_leftmenu = View.inflate(getActivity(), R.layout.item_leftmenu, null);
-            ViewHolder viewHolder=new ViewHolder(item_leftmenu);
+            ViewHolder viewHolder = new ViewHolder(item_leftmenu);
             viewHolder.tv_itemleft_items.setText(dataBean.title);
-            Log.d("MyLeftAdapter", dataBean.title);
+            //Log.d("MyLeftAdapter", dataBean.title);
 
-            if (currentPosition!=position)
-            {
+            if (currentPosition != position) {
                 viewHolder.tv_itemleft_items.setEnabled(false);
-            }else
-            {
+            } else {
                 viewHolder.tv_itemleft_items.setEnabled(true);
             }
 
@@ -110,8 +122,8 @@ public class LeftFragment extends Fragment {
     }
 
     public void setDataBean(Categories categories) {
-        this.categories=categories;
-        Log.d("LeftFragment", "-----"+categories.toString());
+        this.categories = categories;
+        Log.d("LeftFragment", "-----" + categories.toString());
         myLeftAdapter = new MyLeftAdapter();
 
         lv_leftfragment_items.setAdapter(myLeftAdapter);

@@ -47,7 +47,7 @@ public class ContentFragment extends Fragment {
     RadioGroup rg_fragmentcontent_group;
 
     private MyVPAdapter myVPAdapter;
-    List<BasePage> basePageList;
+    List<BasePage> basePageList= new ArrayList<>();
     private BasePage basePage;
 
     @Nullable
@@ -57,8 +57,7 @@ public class ContentFragment extends Fragment {
         View inflate = View.inflate(getActivity(), R.layout.fragment_content, null);
         ButterKnife.bind(this, inflate);
 
-        basePageList = new ArrayList<>();
-
+        //集合添加顺序即为页面显示顺序
         basePageList.add(new PageHome(getActivity()));
         basePageList.add(new PageNews(getActivity()));
         basePageList.add(new PageSmart(getActivity()));
@@ -74,42 +73,41 @@ public class ContentFragment extends Fragment {
         rg_fragmentcontent_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId)
-                {
+                switch (checkedId) {
                     case R.id.rb_fragmentcontent_home:
                         //position可为范围内任意数，所有的page都按照一个page的设置来设置，当通过radiobutton切换到其他page时，
                         //又重新执行了一次setSlidingEnable方法，所有的page又根据新的设置来设置
                         basePageList.get(0).setSlidingEnable(false);
                         //radiobutton与各page绑定，第二个参数为设置滑动效果，true为平滑过渡
-                        vp_fragment_content.setCurrentItem(0,false);
+                        vp_fragment_content.setCurrentItem(0, false);
                         break;
 
                     case R.id.rb_fragmentcontent_news:
                         basePageList.get(1).setSlidingEnable(true);
-                        vp_fragment_content.setCurrentItem(1,false);
-                        PageNews pageNews=new PageNews(getActivity());
-                        if (flag[0])
-                        {
-                            pageNews.getDataFromServer();
-                            flag[0] =false;
-                            Log.d("ContentFragment", "flag[0]:" + flag[0]);
-                        }
+                        vp_fragment_content.setCurrentItem(1, false);
+//                        PageNews pageNews = new PageNews(getActivity());
+//                        Log.d("ContentFragment", "flag[0]:" + flag[0]);
+//                        if (flag[0]) {
+//                            pageNews.getDataFromServer();
+//                            flag[0] = false;
+//                            Log.d("ContentFragment", "flag[0]:" + flag[0]);
+//                        }
 
                         break;
 
                     case R.id.rb_fragmentcontent_smart:
                         basePageList.get(2).setSlidingEnable(false);
-                        vp_fragment_content.setCurrentItem(2,false);
+                        vp_fragment_content.setCurrentItem(2, false);
                         break;
 
                     case R.id.rb_fragmentcontent_gov:
                         basePageList.get(3).setSlidingEnable(false);
-                        vp_fragment_content.setCurrentItem(3,false);
+                        vp_fragment_content.setCurrentItem(3, false);
                         break;
 
                     case R.id.rb_fragmentcontent_setting:
                         basePageList.get(4).setSlidingEnable(false);
-                        vp_fragment_content.setCurrentItem(4,false);
+                        vp_fragment_content.setCurrentItem(4, false);
                         break;
                 }
             }
@@ -129,6 +127,7 @@ public class ContentFragment extends Fragment {
 
         @Override
         public boolean isViewFromObject(View view, Object object) {
+            Log.d("MyVPAdapter", "view==object:" + (view == object));
             return view == object;
         }
 
@@ -144,12 +143,21 @@ public class ContentFragment extends Fragment {
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
 
-            //container.removeView(basePage.mViewPage);
-            //不能销毁之前建立的page
-            container.removeView((View) object);
+            basePage=basePageList.get(position);
+            Log.d("MyVPAdapter", "remove page" + position);
+            container.removeView(basePage.mViewPage);
+            //container.removeView((View) object);
 
             //super.destroyItem(container, position, object);
         }
+    }
+
+    public PageNews getPageNews() {
+        PageNews pageNews = null;
+        if (basePageList != null && !basePageList.isEmpty()) {
+            pageNews = (PageNews) basePageList.get(1);
+        }
+        return pageNews;
     }
 
 }

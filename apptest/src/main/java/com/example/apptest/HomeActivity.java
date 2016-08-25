@@ -3,6 +3,7 @@ package com.example.apptest;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 
 import com.example.fragment.ContentFragment;
 import com.example.fragment.LeftFragment;
@@ -11,6 +12,7 @@ import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 
 public class HomeActivity extends SlidingFragmentActivity {
 
+    ViewPager viewPager;
     private SlidingMenu slidingMenu;
     private FragmentManager fragmentManager;
 
@@ -48,5 +50,10 @@ public class HomeActivity extends SlidingFragmentActivity {
     public LeftFragment getLeftFragment() {
         LeftFragment leftmenu = (LeftFragment) fragmentManager.findFragmentByTag("leftmenu");
         return leftmenu;
+    }
+
+    public ContentFragment getContentFragment() {
+        ContentFragment contentmenu = (ContentFragment) fragmentManager.findFragmentByTag("contentmenu");
+        return contentmenu;
     }
 }

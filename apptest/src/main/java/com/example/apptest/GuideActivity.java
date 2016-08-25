@@ -140,6 +140,7 @@ public class GuideActivity extends AppCompatActivity {
         public boolean isViewFromObject(View view, Object object) {
             //判断当前页面显示的视图是否为指定视图
             ViewPageInfo viewPageInfo = (ViewPageInfo) object;
+            Log.d("MyVPAdapter", "view == viewPageInfo.pageview:" + (view == viewPageInfo.pageview));
             return view == viewPageInfo.pageview;
         }
 
@@ -167,6 +168,7 @@ public class GuideActivity extends AppCompatActivity {
             ViewPageInfo viewPageInfo = viewPageInfoList.get(position);
             ImageView pageview = viewPageInfo.pageview;
             //此处的参数为上面instantiateItem实例化的view，position相同
+            Log.d("MyVPAdapter", "remove"+position);
             container.removeView(pageview);
             //super.destroyItem(container, position, object);
 
